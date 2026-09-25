@@ -95,16 +95,16 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // Imagen desde red con placeholder/error tolerante a desconexión
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(ZerisRadius.lg),
-                  child: Container(
-                    width: 130,
-                    height: 130,
-                    decoration: BoxDecoration(
-                      color: ZerisColors.panelBg,
-                      border: Border.all(color: ZerisColors.panelBorder, width: 1),
-                      borderRadius: BorderRadius.circular(ZerisRadius.lg),
-                    ),
+                Container(
+                  width: 130,
+                  height: 130,
+                  decoration: BoxDecoration(
+                    color: ZerisColors.panelBg,
+                    border: Border.all(color: ZerisColors.panelBorder, width: 1),
+                    borderRadius: BorderRadius.circular(ZerisRadius.lg),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(ZerisRadius.lg - 1),
                     child: Image.network(
                       'https://picsum.photos/150',
                       width: 130,
@@ -138,15 +138,16 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(width: ZerisSpacing.md),
 
                 // Imagen local desde assets: logo_zeris.png
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(ZerisRadius.lg),
-                  child: Container(
-                    width: 130,
-                    height: 130,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: ZerisColors.panelBorder, width: 1),
-                      borderRadius: BorderRadius.circular(ZerisRadius.lg),
-                    ),
+                Container(
+                  width: 130,
+                  height: 130,
+                  decoration: BoxDecoration(
+                    color: ZerisColors.panelBg,
+                    border: Border.all(color: ZerisColors.panelBorder, width: 1),
+                    borderRadius: BorderRadius.circular(ZerisRadius.lg),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(ZerisRadius.lg - 1),
                     child: Image.asset(
                       'assets/logo_zeris.png',
                       width: 130,
