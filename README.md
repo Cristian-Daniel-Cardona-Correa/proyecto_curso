@@ -25,5 +25,9 @@ Este repositorio contiene la solución al Taller 1 de desarrollo móvil con Flut
    ```
 
 ## Capturas
+
+1. Estado inicial
 <img width="452" height="886" alt="imagen" src="https://github.com/user-attachments/assets/b0b35958-f8e4-4058-9117-97e7d84f9063" />
+
+2. Cambio de titulo
 <img width="457" height="899" alt="imagen" src="https://github.com/user-attachments/assets/0fe5031f-cdaa-4f22-9229-5fdb029281ea" />
