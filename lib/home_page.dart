@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'screens/async_demo_screen.dart';
+import 'screens/isolate_demo_screen.dart';
+import 'screens/stopwatch_screen.dart';
 import 'theme.dart';
 
 /// Pantalla principal (HomePage) que implementa el Taller 1 replicando
@@ -310,6 +313,128 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
+
+            const SizedBox(height: ZerisSpacing.lg),
+
+            // Módulos de Asincronía, Segundo Plano y Servicios (Taller 2)
+            Container(
+              decoration: zerisPanelDecoration(),
+              padding: const EdgeInsets.symmetric(vertical: ZerisSpacing.sm),
+              child: Material(
+                type: MaterialType.transparency,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: ZerisSpacing.md,
+                      vertical: ZerisSpacing.xs,
+                    ),
+                    child: Text(
+                      'SERVICIOS Y SEGUNDO PLANO',
+                      style: ZerisTypography.kicker(),
+                    ),
+                  ),
+                  const SizedBox(height: ZerisSpacing.xs),
+                  ListTile(
+                    leading: const Icon(
+                      Icons.cloud_sync,
+                      color: ZerisColors.kicker,
+                    ),
+                    title: Text(
+                      'Demo Async (Future)',
+                      style: ZerisTypography.title(),
+                    ),
+                    subtitle: Text(
+                      'Consultas remotas con async / await y manejo de estados',
+                      style: ZerisTypography.body(color: ZerisColors.uiMuted),
+                    ),
+                    trailing: const Icon(
+                      Icons.chevron_right,
+                      color: ZerisColors.uiMuted,
+                      size: 20,
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const AsyncDemoScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                  const Divider(
+                    height: 1,
+                    thickness: 1,
+                    indent: ZerisSpacing.md,
+                    endIndent: ZerisSpacing.md,
+                    color: ZerisColors.panelBorder,
+                  ),
+                  ListTile(
+                    leading: const Icon(
+                      Icons.timer,
+                      color: ZerisColors.kicker,
+                    ),
+                    title: Text(
+                      'Cronómetro',
+                      style: ZerisTypography.title(),
+                    ),
+                    subtitle: Text(
+                      'Medición precisa de tiempos con Timer.periodic y Stopwatch',
+                      style: ZerisTypography.body(color: ZerisColors.uiMuted),
+                    ),
+                    trailing: const Icon(
+                      Icons.chevron_right,
+                      color: ZerisColors.uiMuted,
+                      size: 20,
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const StopwatchScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                  const Divider(
+                    height: 1,
+                    thickness: 1,
+                    indent: ZerisSpacing.md,
+                    endIndent: ZerisSpacing.md,
+                    color: ZerisColors.panelBorder,
+                  ),
+                  ListTile(
+                    leading: const Icon(
+                      Icons.memory,
+                      color: ZerisColors.kicker,
+                    ),
+                    title: Text(
+                      'Tarea Pesada (Isolate)',
+                      style: ZerisTypography.title(),
+                    ),
+                    subtitle: Text(
+                      'Cómputo intensivo CPU-bound en Isolate sin congelar la UI',
+                      style: ZerisTypography.body(color: ZerisColors.uiMuted),
+                    ),
+                    trailing: const Icon(
+                      Icons.chevron_right,
+                      color: ZerisColors.uiMuted,
+                      size: 20,
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const IsolateDemoScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
           ],
         ),
       ),
