@@ -170,3 +170,54 @@ git merge dev
 | **Captura 3** | Notificación `SnackBar` flotante en pantalla con `"Título actualizado"`. | `[Espacio para captura]` |
 | **Captura 4** | Funcionamiento y visualización de los 2 widgets adicionales: Panel motivacional (`fp-panel`) y `ListView` de grupos musculares. | `[Espacio para captura]` |
 | **Captura 5** | Evidencia de ramas Git en terminal o GitHub (`feature/taller1`, `dev`, `main`) y registro de commits. | `[Espacio para captura]` |
+
+---
+
+# Zeris Mobile — Taller 2: Asincronía, Segundo Plano y Servicios
+
+Extensión de la plataforma **Zeris** orientada al procesamiento asíncrono, concurrencia en segundo plano y gestión eficiente del ciclo de vida de recursos sin bloquear el hilo de la interfaz de usuario (*UI Thread*).
+
+- **Rama de Trabajo:** `feature/taller_segundo_plano`
+- **Rama Base:** `dev`
+- **Flujo de Integración:** `feature/taller_segundo_plano` $\rightarrow$ `dev` $\rightarrow$ `main`
+
+---
+
+## 🧠 ¿Cuándo usar cada tecnología?
+
+| Mecanismo | ¿Cuándo usarlo? | ¿Crea un nuevo hilo? | Caso de uso en Zeris |
+|---|---|---|---|
+| **`Future` / `async` / `await`** | Para operaciones de **I/O-bound** (red, lectura de bases de datos, disco o temporizadores de espera). | **No** (usa el Event Loop del hilo principal). | `FakeService.fetchWorkoutData()`: Consulta remota de planes y rutinas sin congelar la app. |
+| **`Timer` / `Timer.periodic`** | Para programar eventos diferidos o tareas repetitivas en intervalos fijos. | **No** (se agenda en la cola de eventos). | `StopwatchScreen`: Refresco del marcador a 100 ms combinado con `Stopwatch` para precisión absoluta. |
+| **`Isolate` (`Isolate.spawn`)** | Para tareas **CPU-bound** (procesamiento pesado de datos, algoritmos matemáticos, compresión, parseo de JSON masivo). | **Sí** (espacio de memoria propio y nuevo hilo del SO). | `IsolateDemoScreen`: Cálculo de 500M de iteraciones sin detener la animación a 60 FPS. |
+
+---
+
+## 🗺️ Diagrama y Flujo de Pantallas
+
+```
+[HomePage (Pantalla Principal)]
+  │
+  ├──> [Demo Async (Future)] ───> Botón "Consultar" ───> Estados: Cargando / Éxito / Error (try-catch)
+  │
+  ├──> [Cronómetro (Timer)]   ───> Iniciar / Pausar / Reanudar / Reiniciar (Stopwatch + Timer.periodic 100ms)
+  │
+  └──> [Tarea Pesada (Isolate)] ─┬─> "Ejecutar en Isolate" (Hilo independiente a 60 FPS, spinner fluido)
+                                 └─> "Ejecutar en Hilo Principal" (Demuestra congelamiento del Event Loop)
+```
+
+---
+
+## 📸 Evidencias Requeridas para Taller 2 (Informe PDF)
+
+| Evidencia | Descripción | Estado |
+|---|---|---|
+| **Captura 6** | Pantalla de carga asíncrona en estado "Cargando..." (`CircularProgressIndicator`). | `[Espacio para captura]` |
+| **Captura 7** | Pantalla asíncrona con datos cargados con éxito (Panel Zeris con rutina del día). | `[Espacio para captura]` |
+| **Captura 8** | Pantalla asíncrona en estado de error simulado con botón "Reintentar". | `[Espacio para captura]` |
+| **Captura 9** | Cronómetro en marcha mostrando formato `mm:ss.cs` y botón "Pausar". | `[Espacio para captura]` |
+| **Captura 10** | Cronómetro pausado mostrando opciones "Reanudar" y "Reiniciar". | `[Espacio para captura]` |
+| **Captura 11** | Demostración Isolate: Ejecución en segundo plano con spinner girando y tiempo en ms. | `[Espacio para captura]` |
+| **Captura 12** | Demostración Isolate: Salida en consola de depuración (`debugPrint`) con mensajes de SendPort/ReceivePort. | `[Espacio para captura]` |
+| **Captura 13** | Flujo Git: Ramas `feature/taller_segundo_plano`, Pull Request hacia `dev` e integración a `main`. | `[Espacio para captura]` |
+
