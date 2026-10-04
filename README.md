@@ -76,21 +76,6 @@ git checkout main
 git merge dev
 ```
 
----
-
-## 📸 Evidencias de la Aplicación (Para Informe PDF)
-
-*(Sección reservada para anexar las capturas de pantalla tomadas del emulador o dispositivo)*
-
-| Evidencia | Descripción | Estado |
-|---|---|---|
-| **Captura 1** | Estado inicial de la aplicación (AppBar con `"Hola, Flutter"`, nombre del estudiante, Row con imágenes, botón CTA y paneles). | `[Espacio para captura]` |
-| **Captura 2** | Estado tras presionar el botón: Título cambiado a `"¡Título cambiado!"`. | `[Espacio para captura]` |
-| **Captura 3** | Notificación `SnackBar` flotante en pantalla con `"Título actualizado"`. | `[Espacio para captura]` |
-| **Captura 4** | Funcionamiento y visualización de los 2 widgets adicionales: Panel motivacional (`fp-panel`) y `ListView` de grupos musculares. | `[Espacio para captura]` |
-| **Captura 5** | Evidencia de ramas Git en terminal o GitHub (`feature/taller1`, `dev`, `main`) y registro de commits. | `[Espacio para captura]` |
-
----
 
 # Zeris Mobile — Taller 2: Asincronía, Segundo Plano y Servicios
 
@@ -126,16 +111,3 @@ Extensión de la plataforma **Zeris** orientada al procesamiento asíncrono, con
 ```
 
 ---
-
-## 📸 Evidencias Requeridas para Taller 2 (Informe PDF)
-
-| Evidencia | Descripción | Estado |
-|---|---|---|
-| **Captura 6** | Pantalla de carga asíncrona en estado "Cargando..." (`CircularProgressIndicator`). | `[Espacio para captura]` |
-| **Captura 7** | Pantalla asíncrona con datos cargados con éxito (Panel Zeris con rutina del día). | `[Espacio para captura]` |
-| **Captura 8** | Pantalla asíncrona en estado de error simulado con botón "Reintentar". | `[Espacio para captura]` |
-| **Captura 9** | Cronómetro en marcha mostrando formato `mm:ss.cs` y botón "Pausar". | `[Espacio para captura]` |
-| **Captura 10** | Cronómetro pausado mostrando opciones "Reanudar" y "Reiniciar". | `[Espacio para captura]` |
-| **Captura 11** | Demostración Isolate: Ejecución en segundo plano con spinner girando y tiempo en ms. | `[Espacio para captura]` |
-| **Captura 12** | Demostración Isolate: Salida en consola de depuración (`debugPrint`) con mensajes de SendPort/ReceivePort. | `[Espacio para captura]` |
-| **Captura 13** | Flujo Git: Ramas `feature/taller_segundo_plano`, Pull Request hacia `dev` e integración a `main`. | `[Espacio para captura]` |
