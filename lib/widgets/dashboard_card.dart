@@ -23,7 +23,7 @@ class DashboardCard extends StatelessWidget {
         splashColor: AppTheme.primaryIndigo.withAlpha(40),
         highlightColor: AppTheme.primaryIndigo.withAlpha(20),
         child: Container(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: AppTheme.surfacePanel,
             borderRadius: BorderRadius.circular(AppTheme.radiusLg),
@@ -65,36 +65,39 @@ class DashboardCard extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    endpoint.kicker,
-                    style: AppTheme.kickerStyle,
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    endpoint.title,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w800,
-                      color: AppTheme.textPrimary,
-                      letterSpacing: -0.3,
+              const SizedBox(height: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      endpoint.kicker,
+                      style: AppTheme.kickerStyle,
                     ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    endpoint.description,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: AppTheme.textSecondary,
-                      height: 1.35,
+                    const SizedBox(height: 4),
+                    Text(
+                      endpoint.title,
+                      style: const TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w800,
+                        color: AppTheme.textPrimary,
+                        letterSpacing: -0.3,
+                      ),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 4),
+                    Text(
+                      endpoint.description,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: AppTheme.textSecondary,
+                        height: 1.3,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

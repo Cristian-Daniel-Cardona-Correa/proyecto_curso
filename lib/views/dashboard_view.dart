@@ -103,7 +103,7 @@ class DashboardView extends StatelessWidget {
                       crossAxisCount: crossAxisCount,
                       mainAxisSpacing: 16,
                       crossAxisSpacing: 16,
-                      mainAxisExtent: 180,
+                      mainAxisExtent: 200,
                     ),
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
