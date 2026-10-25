@@ -1,10 +1,10 @@
 # Datos Abiertos de Colombia — Flutter
 
-Aplicación móvil desarrollada en **Flutter** que consume la API pública oficial del gobierno [API Colombia](https://api-colombia.com/), implementando un Dashboard interactivo, Listado dinámico con filtros en tiempo real y vista de Detalle estructurada mediante **go_router**, manejo integral de 4 estados reactivos (cargando, éxito, error con reintento y vacío), arquitectura limpia por capas y el sistema de diseño **Zeris Dark Theme**.
+Aplicación móvil desarrollada en **Flutter** que consume la API pública oficial del gobierno [API Colombia](https://api-colombia.com/), implementando un Dashboard interactivo, Listado dinámico con filtros en tiempo real y vista de Detalle estructurada mediante **go_router**, manejo integral de 4 estados reactivos (cargando, éxito, error con reintento y vacío), arquitectura limpia por capas.
 
 ---
 
-## 👤 Información del Estudiante y Proyecto
+## Información del Estudiante y Proyecto
 
 - **Estudiante:** Cristian Daniel Cardona Correa
 - **Correo Institucional:** cristian.cardona02@uceva.edu.co
@@ -18,7 +18,7 @@ Aplicación móvil desarrollada en **Flutter** que consume la API pública ofici
 
 ---
 
-## 🌐 API Pública y Endpoints Seleccionados
+## API Pública y Endpoints Seleccionados
 
 - **Portal Oficial:** [https://api-colombia.com/](https://api-colombia.com/)
 - **Documentación Swagger:** [https://api-colombia.com/swagger/index.html](https://api-colombia.com/swagger/index.html)
@@ -35,7 +35,7 @@ Aplicación móvil desarrollada en **Flutter** que consume la API pública ofici
 
 ---
 
-## 🧱 Arquitectura y Estructura del Proyecto
+## Arquitectura y Estructura del Proyecto
 
 Se aplicó una arquitectura estricta por capas donde la lógica de red está 100% desacoplada de la interfaz de usuario:
 
@@ -55,11 +55,11 @@ lib/
 │   ├── api_exception.dart       # Excepción personalizada con statusCode y detalles
 │   └── api_service.dart         # Cliente HTTP centralizado con validación de códigos y timeouts
 ├── themes/
-│   └── app_theme.dart           # Tokens y ThemeData oficial del Design System Zeris Dark
+│   └── app_theme.dart           # Tokens y ThemeData oficial del Design System Dark
 ├── views/
 │   ├── dashboard_view.dart      # Home con 4 tarjetas interactivas hacia cada endpoint
 │   ├── list_view.dart           # Listado con ListView.builder, búsqueda y 4 estados
-│   └── detail_view.dart         # Vista de detalle con métricas en panel Zeris
+│   └── detail_view.dart         # Vista de detalle con métricas en panel
 ├── widgets/
 │   ├── dashboard_card.dart      # Card con kicker, ícono y elevación por superficie
 │   ├── empty_state.dart         # Estado vacío cuando no hay registros
@@ -71,18 +71,18 @@ lib/
 
 ---
 
-## 📦 Paquetes Implementados (`pubspec.yaml`)
+## Paquetes Implementados (`pubspec.yaml`)
 
 | Paquete | Versión | Rol en la Aplicación |
 |---|---|---|
 | `http` | `^1.2.1` | Realización de peticiones HTTP REST asíncronas hacia API Colombia. |
 | `go_router` | `^14.2.0` | Enrutamiento declarativo con rutas nombradas y paso seguro de parámetros por URL. |
 | `flutter_dotenv` | `^5.1.0` | Carga de variables de entorno seguras (`API_BASE_URL`) desde el archivo `.env`. |
-| `google_fonts` | `^6.2.1` | Tipografía Inter/Manrope optimizada para el sistema de diseño Zeris. |
+| `google_fonts` | `^6.2.1` | Tipografía Inter/Manrope optimizada para el sistema de diseño. |
 
 ---
 
-## 🚦 Manejo de Estados en la UI
+## Manejo de Estados en la UI
 
 La aplicación implementa un flujo reactivo completo en la capa de presentación:
 
@@ -93,7 +93,7 @@ La aplicación implementa un flujo reactivo completo en la capa de presentación
 
 ---
 
-## 🧭 Rutas Implementadas con `go_router`
+## Rutas Implementadas con `go_router`
 
 Se configuró un árbol de rutas declarativo con nombres unívocos:
 
@@ -120,7 +120,7 @@ En caso de rutas inexistentes, `errorBuilder` captura la excepción y muestra un
 
 ---
 
-## 📄 Ejemplos de Respuestas JSON de la API
+## Ejemplos de Respuestas JSON de la API
 
 ### 1. Departamentos (`GET /Department/1`)
 
@@ -197,9 +197,9 @@ En caso de rutas inexistentes, `errorBuilder` captura la excepción y muestra un
 
 ---
 
-## 🎨 Sistema de Diseño Zeris Dark
+## Sistema de Diseño Dark
 
-La interfaz adopta rigurosamente los principios visuales de **Zeris**:
+La interfaz adopta rigurosamente los principios visuales:
 
 - **Fondo Neutral Frío:** `#0B0B12` como color base (`pageDark`), evitando negros y blancos puros.
 - **Superficies de Panel:** Fondo `#151625` con bordes sutiles de 1px en violeta translúcido (`#7C3AED` al 20%) y elevaciones suaves por sombra difusa.
@@ -208,7 +208,7 @@ La interfaz adopta rigurosamente los principios visuales de **Zeris**:
 
 ---
 
-## 🚀 Guía de Instalación y Ejecución
+## Guía de Instalación y Ejecución
 
 ### 1. Clonar el repositorio y ubicarse en la rama
 
@@ -246,15 +246,15 @@ flutter run
 
 ---
 
-## 🌿 Flujo GitFlow y Commits Realizados
+## Flujo GitFlow y Commits Realizados
 
 El desarrollo siguió estrictamente la metodología GitFlow con commits atómicos y semánticos:
 
 1. `chore(config): configurar flutter_dotenv, http y go_router con variables de entorno`
-2. `feat(theme): implementar tema Zeris con paleta indigo-violeta y tokens de diseno`
+2. `feat(theme): implementar tema con paleta indigo-violeta y tokens de diseño`
 3. `feat(models): implementar modelos de Department, President, TouristicAttraction y TypicalDish con serializacion JSON`
 4. `feat(services): crear capa de servicio ApiService y excepciones personalizadas con manejo de status codes y timeout`
-5. `feat(widgets): crear componentes reutilizables Zeris (DashboardCard, LoadingIndicator, ErrorRetry, EmptyState, ItemTiles)`
+5. `feat(widgets): crear componentes reutilizables (DashboardCard, LoadingIndicator, ErrorRetry, EmptyState, ItemTiles)`
 6. `feat(views): implementar DashboardView, ListViewScreen y DetailView con estados reactivos`
 7. `feat(routes): configurar GoRouter con rutas nombradas, paso de parametros y errorBuilder`
 8. `fix(ui): corregir CardThemeData en AppTheme, EdgeInsets y fallbacks de error en imagenes`
