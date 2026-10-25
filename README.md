@@ -16,6 +16,7 @@ Aplicación móvil desarrollada en **Flutter** que consume la API pública ofici
   - `dev`: Rama de integración continua.
   - `feature/taller_api_colombia`: Rama de desarrollo del taller.
 
+<<<<<<< HEAD
 ---
 
 ## 🌐 API Pública y Endpoints Seleccionados
@@ -27,6 +28,22 @@ Aplicación móvil desarrollada en **Flutter** que consume la API pública ofici
 ### 4 Endpoints Consumidos (GET)
 
 | Recurso | Endpoint Listado | Endpoint Detalle | Descripción |
+=======
+
+# Zeris Mobile — Taller 2: Asincronía, Segundo Plano y Servicios
+
+Extensión de la plataforma **Zeris** orientada al procesamiento asíncrono, concurrencia en segundo plano y gestión eficiente del ciclo de vida de recursos sin bloquear el hilo de la interfaz de usuario (*UI Thread*).
+
+- **Rama de Trabajo:** `feature/taller_segundo_plano`
+- **Rama Base:** `dev`
+- **Flujo de Integración:** `feature/taller_segundo_plano` $\rightarrow$ `dev` $\rightarrow$ `main`
+
+---
+
+## 🧠 ¿Cuándo usar cada tecnología?
+
+| Mecanismo | ¿Cuándo usarlo? | ¿Crea un nuevo hilo? | Caso de uso en Zeris |
+>>>>>>> origin/main
 |---|---|---|---|
 | **1. Departamentos** | `GET /Department` | `GET /Department/{id}` | Geografía, división política, municipios, superficies, población y ciudades capitales. |
 | **2. Presidentes** | `GET /President` | `GET /President/{id}` | Mandatarios históricos de la República, periodos de gobierno, partidos y biografías. |
@@ -70,6 +87,7 @@ lib/
 ```
 
 ---
+<<<<<<< HEAD
 
 ## 📦 Paquetes Implementados (`pubspec.yaml`)
 
@@ -261,3 +279,5 @@ El desarrollo siguió estrictamente la metodología GitFlow con commits atómico
 9. `fix(dashboard): asegurar ajuste flexible en DashboardCard para evitar desbordamientos`
 10. `test: anadir pruebas unitarias de modelos, api_service con MockClient y widget tests de DashboardView`
 11. `docs: documentar endpoints, arquitectura, rutas go_router y guia de ejecucion en README.md`
+=======
+>>>>>>> origin/main
