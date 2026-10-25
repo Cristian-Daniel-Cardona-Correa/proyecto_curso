@@ -11,7 +11,7 @@ import '../themes/app_theme.dart';
 import '../widgets/error_retry.dart';
 import '../widgets/loading_indicator.dart';
 
-/// Pantalla de Detalle que consume GET /<Recurso>/{id} con diseño de panel Zeris.
+/// Pantalla de Detalle que consume `GET /<Recurso>/{id}` con diseño de panel Zeris.
 class DetailView extends StatefulWidget {
   final String endpointKey;
   final int id;
@@ -186,7 +186,7 @@ class _DetailViewState extends State<DetailView> {
           if (pres.image != null && pres.image!.isNotEmpty)
             Center(
               child: Container(
-                margin: const EdgeInsets.bottom(20),
+                margin: const EdgeInsets.only(bottom: 20),
                 width: 140,
                 height: 140,
                 decoration: BoxDecoration(
@@ -199,7 +199,7 @@ class _DetailViewState extends State<DetailView> {
                   child: Image.network(
                     pres.image!,
                     fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => Container(
+                    errorBuilder: (_, _, _) => Container(
                       color: AppTheme.surfacePanel,
                       child: const Icon(Icons.person, size: 60, color: AppTheme.kickerText),
                     ),
@@ -241,7 +241,7 @@ class _DetailViewState extends State<DetailView> {
         children: [
           if (attr.firstImage != null)
             Container(
-              margin: const EdgeInsets.bottom(20),
+              margin: const EdgeInsets.only(bottom: 20),
               width: double.infinity,
               height: 220,
               decoration: BoxDecoration(
@@ -254,7 +254,7 @@ class _DetailViewState extends State<DetailView> {
                 child: Image.network(
                   attr.firstImage!,
                   fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) => Container(
+                  errorBuilder: (_, _, _) => Container(
                     color: AppTheme.surfacePanel,
                     child: const Icon(Icons.landscape, size: 60, color: AppTheme.kickerText),
                   ),
@@ -295,7 +295,7 @@ class _DetailViewState extends State<DetailView> {
         children: [
           if (dish.imageUrl != null && dish.imageUrl!.isNotEmpty)
             Container(
-              margin: const EdgeInsets.bottom(20),
+              margin: const EdgeInsets.only(bottom: 20),
               width: double.infinity,
               height: 220,
               decoration: BoxDecoration(
@@ -308,7 +308,7 @@ class _DetailViewState extends State<DetailView> {
                 child: Image.network(
                   dish.imageUrl!,
                   fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) => Container(
+                  errorBuilder: (_, _, _) => Container(
                     color: AppTheme.surfacePanel,
                     child: const Icon(Icons.restaurant, size: 60, color: AppTheme.kickerText),
                   ),

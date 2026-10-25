@@ -141,7 +141,7 @@ class PresidentTile extends StatelessWidget {
                   ? Image.network(
                       president.image!,
                       fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => _buildFallbackAvatar(),
+                      errorBuilder: (_, _, _) => _buildFallbackAvatar(),
                     )
                   : _buildFallbackAvatar(),
             ),
@@ -225,7 +225,7 @@ class TouristicAttractionTile extends StatelessWidget {
                   ? Image.network(
                       attraction.firstImage!,
                       fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => _buildFallbackIcon(),
+                      errorBuilder: (_, _, _) => _buildFallbackIcon(),
                     )
                   : _buildFallbackIcon(),
             ),
@@ -311,7 +311,7 @@ class TypicalDishTile extends StatelessWidget {
                   ? Image.network(
                       dish.imageUrl!,
                       fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => _buildFallbackIcon(),
+                      errorBuilder: (_, _, _) => _buildFallbackIcon(),
                     )
                   : _buildFallbackIcon(),
             ),
