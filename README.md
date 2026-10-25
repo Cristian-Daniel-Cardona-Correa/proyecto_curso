@@ -1,172 +1,263 @@
-# Zeris Mobile — Taller 1: StatefulWidget & setState()
+# Datos Abiertos de Colombia — Flutter
 
-Aplicación móvil construida en **Flutter** que traduce fielmente el sistema de diseño y la identidad visual de **Zeris**, una plataforma fitness web desarrollada originalmente en SvelteKit. Este proyecto corresponde a la entrega del **Taller 1** para la asignatura de desarrollo móvil.
+Aplicación móvil desarrollada en **Flutter** que consume la API pública oficial del gobierno [API Colombia](https://api-colombia.com/), implementando un Dashboard interactivo, Listado dinámico con filtros en tiempo real y vista de Detalle estructurada mediante **go_router**, manejo integral de 4 estados reactivos (cargando, éxito, error con reintento y vacío), arquitectura limpia por capas y el sistema de diseño **Zeris Dark Theme**.
 
 ---
 
-## 👤 Datos del Estudiante
+## 👤 Información del Estudiante y Proyecto
 
-- **Nombre Completo:** Cristian Daniel Cardona Correa
+- **Estudiante:** Cristian Daniel Cardona Correa
 - **Correo Institucional:** cristian.cardona02@uceva.edu.co
+- **Institución:** Unidad Central del Valle del Cauca (UCEVA)
 - **Asignatura:** Desarrollo Móvil / Programación Móvil con Flutter
-- **Institución:** UCEVA (Unidad Central del Valle del Cauca)
-- **Repositorio en GitHub:** [https://github.com/Cristian-Daniel-Cardona-Correa/proyecto_curso](https://github.com/Cristian-Daniel-Cardona-Correa/proyecto_curso)
-- **Rama del Taller:** `feature/taller1`
+- **Repositorio:** [https://github.com/Cristian-Daniel-Cardona-Correa/proyecto_curso](https://github.com/Cristian-Daniel-Cardona-Correa/proyecto_curso)
+- **Ramas del Proyecto (GitFlow):**
+  - `main`: Rama estable y de producción.
+  - `dev`: Rama de integración continua.
+  - `feature/taller_api_colombia`: Rama de desarrollo del taller.
 
 ---
 
-## 🎯 Objetivo del Taller
+## 🌐 API Pública y Endpoints Seleccionados
 
-1. Construir una pantalla básica e interactiva en Flutter haciendo uso de `StatefulWidget` y evidenciando el ciclo de actualización de la interfaz con `setState()`.
-2. Replicar fielmente los tokens de diseño (colores OKLCH traducidos a hex ARGB, tipografía Manrope, bordes redondeados y elevaciones por superficie/sombra) de **Zeris Fitness Platform**.
-3. Aplicar buenas prácticas profesionales de control de versiones con Git (flujo con ramas `main`, `dev` y `feature/taller1`, commits semánticos y flujo de Pull Request).
+- **Portal Oficial:** [https://api-colombia.com/](https://api-colombia.com/)
+- **Documentación Swagger:** [https://api-colombia.com/swagger/index.html](https://api-colombia.com/swagger/index.html)
+- **URL Base:** `https://api-colombia.com/api/v1` (configurada dinámicamente mediante `.env`)
 
----
+### 4 Endpoints Consumidos (GET)
 
-## 🎨 Sistema de Diseño (Design System Zeris)
-
-La interfaz respeta estrictamente las directrices del design system de Zeris:
-
-- **"The One Accent Gradient Rule":** El gradiente índigo-violeta (`#6366F1` → `#7C3AED`) se reserva exclusivamente para la acción principal (botón de entrenamiento / CTA), evitando su saturación decorativa.
-- **"No Pure White Rule":** Se eliminan blancos y negros puros `#FFFFFF`/`#000000` en modo oscuro; se emplean tonos matizados (`#0B0B12`, `#1B1C2E`, `#EEEDF7`, `#F7F6FB`).
-- **Kickers Editoriales:** Etiquetas en mayúsculas sostenidas, 10px, peso 700 y espaciado amplio (`letterSpacing: 1.4`).
-- **Elevación por Superficie:** Sustitución de `elevation` plano de Material por combinación de contenedor translúcido (`.fp-panel`), borde sutil de 1px (`#7C3AED` al 22%) y sombra profunda difusa (`blurRadius: 40, offset: Offset(0, 10)`).
-
-### Mapeo de Tokens de Color (OKLCH a Flutter ARGB)
-
-| Token Web (CSS / OKLCH) | Equivalente Flutter | Hex / ARGB | Rol en la App |
+| Recurso | Endpoint Listado | Endpoint Detalle | Descripción |
 |---|---|---|---|
-| `--fp-page` (oscuro) | `ZerisColors.page` | `Color(0xFF0B0B12)` | Fondo de pantalla (`scaffoldBackgroundColor`) |
-| `--fp-panel-bg` (oscuro) | `ZerisColors.panelBg` | `Color(0xE01B1C2E)` | Fondo translúcido de paneles (`fp-panel`) |
-| `--fp-panel-border` | `ZerisColors.panelBorder` | `Color(0x387C3AED)` | Borde de 1px en paneles y separadores |
-| `--fp-panel-shadow` | `ZerisColors.panelShadow` | `BoxShadow(...)` | Sombra difusa suave |
-| `--fp-topbar-bg` | `ZerisColors.topbarBg` | `Color(0xE00B0B12)` | Fondo translúcido de AppBar |
-| `--fp-fg` | `ZerisColors.fg` | `Color(0xFFEEEDF7)` | Texto de cuerpo principal |
-| `--fp-fg-strong` | `ZerisColors.fgStrong` | `Color(0xFFF7F6FB)` | Títulos y énfasis |
-| `--fp-ui-muted` | `ZerisColors.uiMuted` | `Color(0xFF84849B)` | Metadatos e iconos secundarios |
-| `--fp-kicker` | `ZerisColors.kicker` | `Color(0xFFA5A0F0)` | Kickers e iconos activos |
-| `primary-indigo` | `ZerisColors.primaryIndigo` | `Color(0xFF6366F1)` | Acento índigo de marca |
-| `accent-violet` | `ZerisColors.accentViolet` | `Color(0xFF7C3AED)` | Acento violeta |
-| Gradiente CTA | `zerisCtaGradient` | `LinearGradient(...)` | Gradiente acción principal |
+| **1. Departamentos** | `GET /Department` | `GET /Department/{id}` | Geografía, división política, municipios, superficies, población y ciudades capitales. |
+| **2. Presidentes** | `GET /President` | `GET /President/{id}` | Mandatarios históricos de la República, periodos de gobierno, partidos y biografías. |
+| **3. Atracciones Turísticas** | `GET /TouristicAttraction` | `GET /TouristicAttraction/{id}` | Parques naturales, museos, monumentos, coordenadas geográficas y galería de imágenes. |
+| **4. Platos Típicos** | `GET /TypicalDish` | `GET /TypicalDish/{id}` | Gastronomía tradicional colombiana, ingredientes autóctonos y departamento de origen. |
 
 ---
 
-## 📱 Requisitos Técnicos Implementados
+## 🧱 Arquitectura y Estructura del Proyecto
 
-1. **AppBar estilo `.fp-topbar`:** Con fondo translúcido (`Color(0xE00B0B12)`), borde inferior sutil de 1px (`Color(0x387C3AED)`) y título dinámico inicializado en `"Hola, Flutter"` mediante una variable de estado.
-2. **Texto con Nombre del Estudiante:** Texto centrado en tipografía Manrope 18px, weight 800: `Cristian Daniel Cardona Correa`.
-3. **Row con dos Imágenes:**
-   - `Image.network('https://picsum.photos/150')`: Con esquinas redondeadas (`BorderRadius.circular(16)`), indicador de carga y control de error en caso de falta de red.
-   - `Image.asset('assets/logo_zeris.png')`: Isotipo oficial de Zeris con radio de 16px.
-4. **Botón Principal interactivo (.fp-cta-training / ElevatedButton):**
-   - Diseñado con `LinearGradient(#6366F1 → #7C3AED)`, radio de 16px, padding de 16x24 y glow shadow índigo al 45%.
-   - Al presionarse ejecuta `setState()`, alternando el título de la AppBar entre `"Hola, Flutter"` y `"¡Título cambiado!"`.
-   - Lanza un `SnackBar` flotante con el texto `"Título actualizado"` con el estilo visual de panel Zeris.
-5. **Widget adicional 1 — Panel de Motivación (.fp-panel):**
-   - Contenedor decorado con `zerisPanelDecoration()`, padding de 24px, kicker `"TU SERIE DE HOY, PRIMERO"` (mayúsculas, tracking amplio) y texto motivador en estilo body.
-6. **Widget adicional 2 — Lista de Grupos Musculares (.fp-panel con ListView):**
-   - Contenedor de altura fija (240px) con `ListView` que lista 4 `ListTile`: *Pecho*, *Espalda*, *Piernas*, *Hombros* con iconos temáticos en color kicker y divisores con borde Zeris.
-7. **Diseño y Maquetación:** Organizado jerárquicamente con `SingleChildScrollView`, `Column`, `Padding(16)` y espaciados `SizedBox(height: 24)`.
-
----
-
-## ⚙️ Instrucciones de Ejecución
-
-### Prerrequisitos
-- Tener instalado el SDK de Flutter (versión estable 3.x o superior).
-- Tener un emulador Android/iOS configurado o dispositivo físico conectado por USB con depuración habilitada.
-
-### Pasos para clonar y ejecutar
-
-1. **Clonar el repositorio:**
-   ```bash
-   git clone https://github.com/Cristian-Daniel-Cardona-Correa/proyecto_curso.git
-   cd proyecto_curso
-   ```
-
-2. **Pasar a la rama del taller:**
-   ```bash
-   git checkout feature/taller1
-   ```
-
-3. **Descargar las dependencias:**
-   ```bash
-   flutter pub get
-   ```
-
-4. **Ejecutar pruebas automatizadas:**
-   ```bash
-   flutter test
-   ```
-
-5. **Verificar análisis estático de código:**
-   ```bash
-   flutter analyze
-   ```
-
-6. **Ejecutar la aplicación en el emulador o dispositivo:**
-   ```bash
-   flutter run
-   ```
-
----
-
-## 📖 Justificación Teórica: Uso de StatefulWidget y setState()
-
-> **Párrafo explicativo para el informe PDF:**
->
-> En el ecosistema de Flutter, la interfaz de usuario es declarativa y se reconstruye a partir del estado de la aplicación. Para este taller se implementó un `StatefulWidget` en la clase `HomePage`, la cual delega su ciclo de vida y mutabilidad a la clase `_HomePageState`. A diferencia de un `StatelessWidget` (cuyo contenido es inmutable una vez instanciado), el `StatefulWidget` permite conservar variables mutables a lo largo del tiempo, como la variable de estado `_titulo`. 
->
-> Al interactuar con el botón principal de acción (`CAMBIAR TÍTULO`), se invoca el método `setState()`. Esta función es fundamental porque notifica al framework de Flutter que el estado interno del widget ha cambiado; Flutter agenda inmediatamente una llamada al método `build()` del State correspondiente, recalculando el sub-árbol de widgets de forma eficiente y reflejando en pantalla la alternancia entre `"Hola, Flutter"` y `"¡Título cambiado!"`, al mismo tiempo que despacha el `SnackBar` flotante mediante el `ScaffoldMessenger`. Sin el uso de `setState()`, la variable interna cambiaría de valor en memoria pero la interfaz gráfica permanecería estática e insensible al cambio.
-
----
-
-## 🌿 Flujo de Trabajo en Git
-
-El proyecto sigue una estrategia basada en ramas estructuradas para control de versiones:
-
-- `main`: Rama de producción / estable.
-- `dev`: Rama de desarrollo base donde convergen los talleres.
-- `feature/taller1`: Rama de trabajo específica para el desarrollo del Taller 1.
+Se aplicó una arquitectura estricta por capas donde la lógica de red está 100% desacoplada de la interfaz de usuario:
 
 ```
-(main)           [Commit Inicial] ───────────────────────────> [Merge de dev]
-                         \                                           ▲
-(dev)                     └───> [Rama base dev] ─────────────────────┤
-                                      \                               ▲
-(feature/taller1)                      └───> [Commits Taller 1] ─────┘
-                                                (Pull Request)
-```
-
-### Comandos Git utilizados para este flujo:
-```bash
-# 1. Crear y pasar a la rama del taller desde dev
-git checkout dev
-git checkout -b feature/taller1
-
-# 2. Realizar commits descriptivos
-git add .
-git commit -m "feat: implementar design tokens y tema Zeris"
-git commit -m "feat: construir HomePage con StatefulWidget, imagenes y lista muscular"
-git commit -m "docs: documentar instrucciones, justificacion teorica y evidencias del Taller 1"
-
-# 3. Integración dev y main
-git checkout dev
-git merge feature/taller1
-git checkout main
-git merge dev
+lib/
+├── config/
+│   └── app_config.dart          # Variables de entorno (.env) y constantes globales
+├── models/
+│   ├── department_model.dart     # Modelo Department con fromJson() y toJson()
+│   ├── endpoint_type.dart        # Enum tipado con metadatos de los 4 endpoints
+│   ├── president_model.dart      # Modelo President con fromJson() y periodFormatted
+│   ├── touristic_attraction_model.dart # Modelo TouristicAttraction con imágenes y coordenadas
+│   └── typical_dish_model.dart   # Modelo TypicalDish con ingredientes y departamento
+├── routes/
+│   └── app_router.dart           # Configuración de GoRouter con rutas nombradas y 404
+├── services/
+│   ├── api_exception.dart       # Excepción personalizada con statusCode y detalles
+│   └── api_service.dart         # Cliente HTTP centralizado con validación de códigos y timeouts
+├── themes/
+│   └── app_theme.dart           # Tokens y ThemeData oficial del Design System Zeris Dark
+├── views/
+│   ├── dashboard_view.dart      # Home con 4 tarjetas interactivas hacia cada endpoint
+│   ├── list_view.dart           # Listado con ListView.builder, búsqueda y 4 estados
+│   └── detail_view.dart         # Vista de detalle con métricas en panel Zeris
+├── widgets/
+│   ├── dashboard_card.dart      # Card con kicker, ícono y elevación por superficie
+│   ├── empty_state.dart         # Estado vacío cuando no hay registros
+│   ├── error_retry.dart         # Estado de fallo con botón gradiente para reintentar
+│   ├── item_tiles.dart          # Tiles específicos por recurso para ListView
+│   └── loading_indicator.dart   # Spinner índigo con panel translúcido
+└── main.dart                    # Entrypoint con inicialización de .env y MaterialApp.router
 ```
 
 ---
 
-## 📸 Evidencias de la Aplicación (Para Informe PDF)
+## 📦 Paquetes Implementados (`pubspec.yaml`)
 
-*(Sección reservada para anexar las capturas de pantalla tomadas del emulador o dispositivo)*
-
-| Evidencia | Descripción | Estado |
+| Paquete | Versión | Rol en la Aplicación |
 |---|---|---|
-| **Captura 1** | Estado inicial de la aplicación (AppBar con `"Hola, Flutter"`, nombre del estudiante, Row con imágenes, botón CTA y paneles). | `[Espacio para captura]` |
-| **Captura 2** | Estado tras presionar el botón: Título cambiado a `"¡Título cambiado!"`. | `[Espacio para captura]` |
-| **Captura 3** | Notificación `SnackBar` flotante en pantalla con `"Título actualizado"`. | `[Espacio para captura]` |
-| **Captura 4** | Funcionamiento y visualización de los 2 widgets adicionales: Panel motivacional (`fp-panel`) y `ListView` de grupos musculares. | `[Espacio para captura]` |
-| **Captura 5** | Evidencia de ramas Git en terminal o GitHub (`feature/taller1`, `dev`, `main`) y registro de commits. | `[Espacio para captura]` |
+| `http` | `^1.2.1` | Realización de peticiones HTTP REST asíncronas hacia API Colombia. |
+| `go_router` | `^14.2.0` | Enrutamiento declarativo con rutas nombradas y paso seguro de parámetros por URL. |
+| `flutter_dotenv` | `^5.1.0` | Carga de variables de entorno seguras (`API_BASE_URL`) desde el archivo `.env`. |
+| `google_fonts` | `^6.2.1` | Tipografía Inter/Manrope optimizada para el sistema de diseño Zeris. |
+
+---
+
+## 🚦 Manejo de Estados en la UI
+
+La aplicación implementa un flujo reactivo completo en la capa de presentación:
+
+1. **Estado Cargando (`loading`):** Renderiza el widget `LoadingIndicator` con un spinner estilizado índigo-violeta y panel oscuro.
+2. **Estado Éxito (`success`):** Muestra los datos consumidos en un `ListView.builder` de alto rendimiento, con soporte para filtrado en tiempo real y gesto de recarga (`RefreshIndicator`).
+3. **Estado Error (`error`):** En caso de desconexión (`SocketException`), tiempo agotado (`TimeoutException`) o respuesta != 200 de la API, captura la excepción como `ApiException` y despliega `ErrorRetry` con el mensaje claro y un botón CTA con gradiente índigo para reintentar la llamada.
+4. **Estado Vacío (`empty`):** Muestra `EmptyState` cuando la categoría no tiene registros o cuando el filtro de búsqueda no encuentra coincidencias.
+
+---
+
+## 🧭 Rutas Implementadas con `go_router`
+
+Se configuró un árbol de rutas declarativo con nombres unívocos:
+
+| Nombre | Ruta | Parámetros | Vista Renderizada |
+|---|---|---|---|
+| `dashboard` | `/` | Ninguno | `DashboardView` |
+| `list` | `/list/:endpoint` | `endpoint` (p. ej. `department`, `president`, `touristic-attraction`, `typical-dish`) | `ListViewScreen` |
+| `detail` | `/list/:endpoint/detail/:id` | `endpoint`, `id` (entero del registro) | `DetailView` |
+
+### Ejemplo de Navegación con Parámetros
+
+```dart
+// Desde Dashboard hacia Listado:
+context.goNamed('list', pathParameters: {'endpoint': 'president'});
+
+// Desde Listado hacia Detalle:
+context.goNamed('detail', pathParameters: {
+  'endpoint': 'president',
+  'id': '1',
+});
+```
+
+En caso de rutas inexistentes, `errorBuilder` captura la excepción y muestra una pantalla 404 personalizada con botón de retorno al Dashboard.
+
+---
+
+## 📄 Ejemplos de Respuestas JSON de la API
+
+### 1. Departamentos (`GET /Department/1`)
+
+```json
+{
+  "id": 1,
+  "name": "Amazonas",
+  "description": "Amazonas es uno de los treinta y dos departamentos...",
+  "cityCapitalId": 1,
+  "municipalities": 2,
+  "surface": 109665,
+  "population": 82068,
+  "phonePrefix": "8",
+  "cityCapital": {
+    "id": 1,
+    "name": "Leticia"
+  }
+}
+```
+
+### 2. Presidentes (`GET /President/1`)
+
+```json
+{
+  "id": 1,
+  "image": "https://upload.wikimedia.org/.../José_María_Campo_Serrano_1.jpg",
+  "name": "José María",
+  "lastName": "Campo Serrano",
+  "startPeriodDate": "1886-08-05",
+  "endPeriodDate": "1887-01-06",
+  "politicalParty": "Partido Nacional",
+  "description": "José María Campo Serrano fue un político, abogado y militar...",
+  "city": {
+    "id": 709,
+    "name": "Santa Marta"
+  }
+}
+```
+
+### 3. Atracciones Turísticas (`GET /TouristicAttraction/1`)
+
+```json
+{
+  "id": 1,
+  "name": "Museo del oro",
+  "description": "El Museo del Oro del Banco de la República de Colombia...",
+  "images": [
+    "https://upload.wikimedia.org/.../800px-BOG_Museo_del_Oro.JPG"
+  ],
+  "latitude": "4.601919",
+  "longitude": "-74.072",
+  "city": {
+    "id": 167,
+    "name": "Bogotá D.C."
+  }
+}
+```
+
+### 4. Platos Típicos (`GET /TypicalDish/1`)
+
+```json
+{
+  "id": 1,
+  "name": "Bandeja Paisa",
+  "description": "La bandeja paisa es el orgullo de la cocina paisa...",
+  "ingredients": "Frijoles, arroz, carne molida, chicharrón, huevo, plátano maduro...",
+  "imageUrl": "https://apicolombiastorage.blob.core.windows.net/.../1. Bandeja Paisa.jpg",
+  "department": {
+    "id": 2,
+    "name": "Antioquia"
+  }
+}
+```
+
+---
+
+## 🎨 Sistema de Diseño Zeris Dark
+
+La interfaz adopta rigurosamente los principios visuales de **Zeris**:
+
+- **Fondo Neutral Frío:** `#0B0B12` como color base (`pageDark`), evitando negros y blancos puros.
+- **Superficies de Panel:** Fondo `#151625` con bordes sutiles de 1px en violeta translúcido (`#7C3AED` al 20%) y elevaciones suaves por sombra difusa.
+- **Regla del Acento Único:** El gradiente índigo-violeta (`#6366F1` → `#7C3AED`) se reserva para los botones de acción principal (CTA) como el reintento de conexión y branding.
+- **Jerarquía Tipográfica:** Títulos en pesos 700 a 900 y kickers en 10px mayúsculas con espaciado amplio (`letter-spacing: 1.4`).
+
+---
+
+## 🚀 Guía de Instalación y Ejecución
+
+### 1. Clonar el repositorio y ubicarse en la rama
+
+```bash
+git clone https://github.com/Cristian-Daniel-Cardona-Correa/proyecto_curso.git
+cd proyecto_curso
+git checkout feature/taller_api_colombia
+```
+
+### 2. Configurar variables de entorno
+
+El archivo `.env` ya se encuentra configurado en la raíz del proyecto y registrado en los assets de `pubspec.yaml`:
+
+```env
+API_BASE_URL=https://api-colombia.com/api/v1
+```
+
+### 3. Instalar dependencias
+
+```bash
+flutter pub get
+```
+
+### 4. Ejecutar pruebas automatizadas
+
+```bash
+flutter test test/models_test.dart test/api_service_test.dart test/dashboard_view_test.dart
+```
+
+### 5. Iniciar la aplicación
+
+```bash
+flutter run
+```
+
+---
+
+## 🌿 Flujo GitFlow y Commits Realizados
+
+El desarrollo siguió estrictamente la metodología GitFlow con commits atómicos y semánticos:
+
+1. `chore(config): configurar flutter_dotenv, http y go_router con variables de entorno`
+2. `feat(theme): implementar tema Zeris con paleta indigo-violeta y tokens de diseno`
+3. `feat(models): implementar modelos de Department, President, TouristicAttraction y TypicalDish con serializacion JSON`
+4. `feat(services): crear capa de servicio ApiService y excepciones personalizadas con manejo de status codes y timeout`
+5. `feat(widgets): crear componentes reutilizables Zeris (DashboardCard, LoadingIndicator, ErrorRetry, EmptyState, ItemTiles)`
+6. `feat(views): implementar DashboardView, ListViewScreen y DetailView con estados reactivos`
+7. `feat(routes): configurar GoRouter con rutas nombradas, paso de parametros y errorBuilder`
+8. `fix(ui): corregir CardThemeData en AppTheme, EdgeInsets y fallbacks de error en imagenes`
+9. `fix(dashboard): asegurar ajuste flexible en DashboardCard para evitar desbordamientos`
+10. `test: anadir pruebas unitarias de modelos, api_service con MockClient y widget tests de DashboardView`
+11. `docs: documentar endpoints, arquitectura, rutas go_router y guia de ejecucion en README.md`
