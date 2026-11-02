@@ -35,7 +35,7 @@ class DashboardView extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'DATOS ABIERTOS & GOBIERNO',
+                  'DATOS ABIERTOS & GOB. • v1.0.1',
                   style: TextStyle(
                     fontSize: 9,
                     fontWeight: FontWeight.w700,
@@ -66,7 +66,7 @@ class DashboardView extends StatelessWidget {
                         border: Border.all(color: AppTheme.borderSubtle),
                       ),
                       child: Text(
-                        'API COLOMBIA v1 • DART & FLUTTER',
+                        'API COLOMBIA v1 • FLUTTER 1.0.1+2',
                         style: AppTheme.kickerStyle.copyWith(fontSize: 9),
                       ),
                     ),
