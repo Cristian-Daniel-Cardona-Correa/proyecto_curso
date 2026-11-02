@@ -261,3 +261,77 @@ El desarrollo siguió estrictamente la metodología GitFlow con commits atómico
 9. `fix(dashboard): asegurar ajuste flexible en DashboardCard para evitar desbordamientos`
 10. `test: anadir pruebas unitarias de modelos, api_service con MockClient y widget tests de DashboardView`
 11. `docs: documentar endpoints, arquitectura, rutas go_router y guia de ejecucion en README.md`
+
+---
+
+## 🔥 Publicación con Firebase App Distribution
+
+### Flujo General
+
+```
+Generar APK (flutter build apk) → Subir a App Distribution → Asignar Testers → Instalación → Actualización
+```
+
+### Pasos para Replicar el Proceso
+
+1. **Preparar la build de release:**
+   ```bash
+   flutter build apk --release
+   # El APK queda en: build/app/outputs/flutter-apk/app-release.apk
+   ```
+
+2. **Crear/abrir el proyecto en [Firebase Console](https://console.firebase.google.com/):**
+   - Registrar la app Android con el `applicationId`: `com.example.proyecto_curso`
+   - Descargar `google-services.json` y colocarlo en `android/app/`
+
+3. **Configurar App Distribution:**
+   - Ir a **App Distribution → Testers & Groups**
+   - Crear grupo: `QA_Clase`
+   - Agregar tester: `dduran@uceva.edu.co`
+
+4. **Subir el APK:**
+   - Ir a **Releases → Upload**
+   - Seleccionar `app-release.apk`
+   - Asignar al grupo `QA_Clase`
+   - Pegar las Release Notes (ver archivo `RELEASE_NOTES.md`)
+   - Hacer clic en **Distribute**
+
+5. **Actualización incremental (v1.0.0 → v1.0.1):**
+   - Incrementar la versión en `pubspec.yaml`: `version: 1.0.1+2`
+   - Volver a generar el APK: `flutter build apk --release`
+   - Repetir el proceso de subida con las nuevas Release Notes
+
+### Convención de Versionado
+
+El campo `version` en `pubspec.yaml` sigue el formato `versionName+versionCode`:
+
+| Release | `pubspec.yaml`       | `versionName` | `versionCode` |
+|---------|----------------------|---------------|---------------|
+| Inicial | `version: 1.0.0+1`  | 1.0.0         | 1             |
+| Update  | `version: 1.0.1+2`  | 1.0.1         | 2             |
+
+> El `versionCode` **siempre debe incrementarse** con cada subida a Firebase — de lo contrario, la distribución es rechazada.
+
+### Formato de Release Notes
+
+```
+[VERSIÓN] v<semver> — dd/mm/yyyy
+APP: Colombia Abierta – Datos Abiertos
+CAMBIOS:
+  • <Descripción del cambio 1>
+  • <Descripción del cambio 2>
+CREDENCIALES: No requiere autenticación
+TESTER: <email>
+GRUPO: <nombre_grupo>
+```
+
+Ver `RELEASE_NOTES.md` para las notas completas de v1.0.0 y v1.0.1.
+
+### Rama GitFlow para este Taller
+
+- **Rama de desarrollo:** `feature/app_distribution` (creada desde `dev`)
+- **PR:** `feature/app_distribution` → `dev` → `main`
+- **Commits realizados en esta rama:**
+  - `fix(android): habilitar permiso android.permission.INTERNET en AndroidManifest`
+  - `chore(release): preparar configuracion de release v1.0.0+1 y bitacora de QA para Firebase App Distribution`
+  - `chore(version): incrementar version de 1.0.0+1 a 1.0.1+2 para actualizacion incremental en Firebase App Distribution`
